@@ -58,6 +58,7 @@ def make_new_student(first_name, last_name, github):
     print(f"Successfully added student: {first_name} {last_name}")
 
 
+
 def get_project_by_title(title):
     """Given a project title, print information about the project."""
 
