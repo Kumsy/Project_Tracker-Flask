@@ -23,6 +23,10 @@ def connect_to_db(app):
 def get_student_by_github(github):
     """Given a GitHub account name, print info about the matching student."""
 
+    # print("\n\n\n\n\n\n\n", github)
+    
+    # if github is not None:
+
     QUERY = """
         SELECT first_name, last_name, github
         FROM students
@@ -33,9 +37,8 @@ def get_student_by_github(github):
 
     row = db_cursor.fetchone()
 
-    print(f"Student: {row[0]} {row[1]}\nGitHub account: {row[2]}")
-
     return row
+
 
 
 def make_new_student(first_name, last_name, github):

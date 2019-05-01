@@ -1,6 +1,6 @@
 """A web application for tracking projects, students, and student grades."""
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 
 import hackbright
 
@@ -15,15 +15,32 @@ def get_student():
     # Get github from student_search.html form
     github = request.args.get('github')
 
-    # Unpack and get student by their github in our HB database
-    first, last, github = hackbright.get_student_by_github(github)
+   
 
-    html = render_template("student_info.html",
-                            first = first,
-                            last = last,
-                            github = github)
+    if github:
+        # Unpack and get student by their github in our HB database
+        first, last, github = hackbright.get_student_by_github(github)
 
-    return html
+        """
+            1. Get List of project titles associated with github username.
+            2. Need the grade for each project title.
+            3. Return a tuple that contains the PROJECT TITLE and GRADE.
+            4. Send to student_info.html the list of titles/grades.
+        """
+        project_tuples = hackbright.get_grades_by_github(github)
+        print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
+        print(project_tuples)
+
+
+        html = render_template("student_info.html",
+                                first = first,
+                                last = last,
+                                github = github,
+                                project_tuples = project_tuples)
+
+        return html
+
+    return redirect("/student_search")
 
 @app.route("/student_search")
 def get_student_form():
